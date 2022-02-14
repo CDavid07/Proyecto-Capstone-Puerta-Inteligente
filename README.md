@@ -12,6 +12,8 @@ Título del proyecto:
 
 Smart Gate
 
+
+
 Objetivos generales:
 
 Desarrollar un prototipo de una cerradura inteligente donde el propietario de la vivienda pueda administrar el acceso a otras personas en un apartamento, edificio o habitación específica, utilizando el reconocimiento facial como acceso, ofreciendo una alta seguridad, fácil acceso y control de esta mediante la construcción de un sistema IoT que incluir una aplicación.
