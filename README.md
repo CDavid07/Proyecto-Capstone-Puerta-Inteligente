@@ -1,10 +1,15 @@
 # Proyecto-Capstone-Puerta-Inteligente
 Integrantes del Equipo:
+
 David Arturo Castellanos Guzmán 
+
 Merle Yuridia Meza Nava
+
 Andy Mitchell Torres Martínez
 
+
 Título del proyecto:
+
 Smart Gate
 
 Objetivos generales:
@@ -14,7 +19,9 @@ Desarrollar un prototipo de una cerradura inteligente donde el propietario de la
 Objetivos específicos:
 
 Brindar mayor seguridad y tranquilidad
+
 Implementar un sistema de emergencia para evitar el robo de información
+
 Actualizar las cerraduras antiguas.
 
 Descripción del proyecto:
@@ -25,7 +32,6 @@ La seguridad es lo primordial es la vida de la sociedad, es por eso por lo que s
 Productos:
 
 -ESP32 CAM
--Lector RFID
 -Raspberry Pi 4
 -Cables de puente
 -Código realizado en python / java.
