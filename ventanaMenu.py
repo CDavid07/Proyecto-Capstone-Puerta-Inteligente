@@ -3,6 +3,7 @@ from tkinter import ttk
 from tkinter import messagebox
 import database as db
 import facial_recognition as rf
+import shutil
 
 #Clase definida que hace la creacion de interfaz ventana de menu
 class VentanaMenu(Frame):
@@ -48,11 +49,12 @@ class VentanaMenu(Frame):
     def llenaDatosB(self):
        
         datos = db.getChanges()  
-        print(datos)
         for row in datos:
             if row[4] == 1 :           
                 self.gridSu.insert("",END,text=row[0], values=("Administrador "+str(row[1])+" agrego usuario nuevo llamado "+row[3],row[2]))
-        
+            else:
+                self.gridSu.insert("",END,text=row[0], values=("Administrador "+str(row[1])+" elimino usuario llamado "+row[3],row[2]))
+
         if len(self.gridSu.get_children()) > 0:
             self.gridSu.selection_set( self.gridSu.get_children()[0] )
 
@@ -61,7 +63,7 @@ class VentanaMenu(Frame):
     def inicia(self):
         if self.selected.get()==1:
             db.insertUser(self.idusuario,self.txtNombreN.get())
-            rf.register_capture(self,self.txtNombreN.get(),300)
+            rf.register_capture(self,self.txtNombreN.get(),200)
             self.limpiaGrid()
             self.llenaDatos()
         else:
@@ -129,10 +131,18 @@ class VentanaMenu(Frame):
             valores = self.grid.item(selected,'values')
             r = messagebox.askquestion("Eliminar", "Deseas eliminar el registro seleccionado?\n")            
             if r == messagebox.YES:
-                db.removeUser(clave,valores[0])
+                
+                db.removeUser(self.idusuario,clave,valores[0])
                 messagebox.showinfo("Eliminar", 'Elemento eliminado correctamente.')
                 self.limpiaGrid()
                 self.llenaDatos()
+                dir_path = "/home/pi/Documents/proyecto/facial_recognition/img/"+valores[0]
+
+                try:
+                    shutil.rmtree(dir_path)
+                except OSError as e:
+                    print("Error: %s: %s" % (dir_path, e.strerror))
+                rf.actualiza_Modelo(self)
             else:
                 messagebox.showwarning("Eliminar", 'No fue posible eliminar el elemento.')
 

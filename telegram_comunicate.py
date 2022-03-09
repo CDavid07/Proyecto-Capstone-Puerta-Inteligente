@@ -1,9 +1,9 @@
 from lib2to3.pgen2 import token
 import logging
-from importlib_metadata import files
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import requests
+import facial_recognition as fr
 
 #Habilita registro
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -14,12 +14,18 @@ logger = logging.getLogger(__name__)
 #Envía mensaje a telegram cuando el comando /start es usado.
 def start(update, context):
   
-    update.message.reply_text('¡Bienvenido! En SmartGate nos preocupamos por tu seguridad. Estas son las opciones y acciones que tienes a tu disposición.\nPuedes solicitar:\n1.Agregar usuarios con comando /agregar\n2.Abrir la puerta automáticamente con comando /open o /abrir\nCon el monitoreo constante te podemos informar:\n1.Quien ingresó\n2.Quien desea ingresar sin registro\n¡Suerte! que no te roben ;)')
+    update.message.reply_text('¡Bienvenido! En SmartGate nos preocupamos por tu seguridad. Estas son las opciones y acciones que tienes a tu disposición.\nPuedes solicitar:\n1.Abrir la puerta automáticamente con comando /open \nCon el monitoreo constante te podemos informar:\n1.Quien ingresó\n2.Quien desea ingresar sin registro\n¡Suerte! que no te roben ;)')
 
 #Envía mensaje a telegram cuando el comando /help es usado.
 def help(update, context):
-    update.message.reply_text('/agregar: Te permite agregar usuarios\n/open o /abrir: Abre la puerta automáticamente')
+    update.message.reply_text('Comandos que puedes usar\n/open: Abre la puerta automáticamente')
 
+#Envía mensaje a telegram cuando el comando /open es usado y manda señal de abrir puerta.
+def openD(update, context):
+    fr.abrir()
+    update.message.reply_text('Puerta abierta')
+    
+  
 #Función de notificación donde se manda mensaje cuando una persona ingresa al administrador
 def texto (name):
     send= "Hola, el usuario "+name+" a accedido"
@@ -62,6 +68,7 @@ def main():
     # Respuestas de telegram segun sea el comando que se utilice
     dp.add_handler(CommandHandler("start", start))
     dp.add_handler(CommandHandler("help", help))
+    dp.add_handler(CommandHandler("open", openD))
 
     #Iniciar el bot
     updater.start_polling()
